@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { useApplicationForm } from "../hooks/useApplicationForm";
 import { ApplicationView } from "./ApplicationView";
+import { ErrorMessageForm } from "./ErrorMessageForm";
+import { FaExclamationCircle } from "react-icons/fa";
 
 const initialForm = {
    name: {
@@ -57,115 +59,140 @@ export const ApplicationForm = () => {
 
    return (
       <>
-      <StyledForm onSubmit={handleSubmit}>
-         <WrapperInput>
+         <StyledForm onSubmit={handleSubmit}>
+            <WrapperInput>
+               <StyledInput
+                  type="text"
+                  name="name"
+                  id="name"
+                  placeholder=" "
+                  value={form.name.name}
+                  onChange={handleChange}
+                  onBlur={hanldeBlur}
+               />
+               <label htmlFor="name">Name</label>
+
+               {errors.name && (
+                  <ErrorMessageForm
+                     icon={<FaExclamationCircle />}
+                     message={errors.name}
+                  />
+               )}
+            </WrapperInput>
+
+            <WrapperInput>
+               <StyledInput
+                  type="number"
+                  name="phone"
+                  id="phone"
+                  placeholder=" "
+                  value={form.phone.phone}
+                  onChange={handleChange}
+                  onBlur={hanldeBlur}
+               />
+               <label htmlFor="phone">Phone</label>
+
+               {errors.phone && (
+                  <ErrorMessageForm
+                     icon={<FaExclamationCircle />}
+                     message={errors.phone}
+                  />
+               )}
+            </WrapperInput>
+
+            <WrapperInput>
+               <StyledInput
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder=" "
+                  onChange={handleChange}
+                  value={form.email.email}
+                  onBlur={hanldeBlur}
+               />
+               <label htmlFor="email">email</label>
+
+               {errors.email && (
+                  <ErrorMessageForm
+                     icon={<FaExclamationCircle />}
+                     message={errors.email}
+                  />
+               )}
+            </WrapperInput>
+
+            <label htmlFor="male">Male</label>
             <StyledInput
-               type="text"
-               name="name"
-               id="name"
-               placeholder=" "
-               value={form.name.name}
+               type="radio"
+               name="gender"
+               value="male"
+               checked={form.gender.gender === "male"}
                onChange={handleChange}
-               onBlur={hanldeBlur}
             />
-            <label htmlFor="name">Name</label>
-         </WrapperInput>
 
-         {errors.name && <p> {errors.name} </p>}
-         <WrapperInput>
+            <label htmlFor="famale">Famale</label>
             <StyledInput
-               type="number"
-               name="phone"
-               id="phone"
-               placeholder=" "
-               value={form.phone.phone}
+               type="radio"
+               name="gender"
+               value="famale"
                onChange={handleChange}
-               onBlur={hanldeBlur}
+               checked={form.gender.gender === "famale"}
             />
-            <label htmlFor="phone">Phone</label>
-         </WrapperInput>
-         {errors.phone && <p> {errors.phone} </p>}
 
-         <WrapperInput>
-            <StyledInput
-               type="email"
-               name="email"
-               id="email"
-               placeholder=" "
-               onChange={handleChange}
-               value={form.email.email}
-               onBlur={hanldeBlur}
-            />
-            <label htmlFor="email">email</label>
-         </WrapperInput>
+            <input type="submit"></input>
+         </StyledForm>
 
-         {errors.email && <p> {errors.email} </p>}
-
-         <label htmlFor="male">Male</label>
-         <StyledInput
-            type="radio"
-            name="gender"
-            value="male"
-            checked={form.gender.gender === "male"}
-            onChange={handleChange}
-         />
-
-         <label htmlFor="famale">Famale</label>
-         <StyledInput
-            type="radio"
-            name="gender"
-            value="famale"
-            onChange={handleChange}
-            checked={form.gender.gender === "famale"}
-         />
-
-         <input type="submit"></input>
-      </StyledForm>
-
-      <ApplicationView  form={form}/>
-
+         <ApplicationView form={form} />
       </>
    );
 };
 
 const WrapperInput = styled.div`
-   margin: 20px 0;
+   /* background:gray; */
+   display: flex;
+   align-items: flex-end;
+   font-size: "helvetica";
+   margin: 30px 0;
    width: 70%;
    position: relative;
-   background:red;
+   border-bottom: 2px solid #272727;
 
+   &:hover {
+      border-bottom: 2px solid #3d84b8;
+   }
 
    label {
       position: absolute;
       left: 0;
       pointer-events: none;
-      bottom:0;
+      bottom: 0;
 
       transition: transform 0.3s ease-in-out;
+      /* transition: color 0.3s ease-in-out;
+      transition: font-weight 0.3s ease-in-out; */
    }
 
    input {
-      width: 100%;
+      flex-grow: 1;
       height: 100%;
-      padding: 10px;
       border: none;
-      outline:none;
+      outline: none;
+      padding: 10px;
    }
 
    input:not(:placeholder-shown) + label {
       transform: translateY(-200%);
       font-weight: 800;
-      color:#433436;
+      color: #3d84b8;
    }
 
    input:focus + label {
       transform: translateY(-200%);
+      font-weight: 800;
+      color: #3d84b8;
    }
 `;
 
-const StyledInput = styled.input`
-   padding: 10px;
-`;
+const StyledInput = styled.input``;
 
 const StyledForm = styled.form`
    display: flex;
